@@ -54,9 +54,9 @@ public class OrderController {
         Order order = orderService.confirmOrder(id, request.isConfirm());
         return ResponseEntity.status(HttpStatus.OK).body(new OrderResponse(order));
     }
-    @PostMapping()
-    public ResponseEntity<OrderResponse> cancelOrder(@PathVariable Long id){
-        Order order = orderService.cancelOrder(id);
+    @PostMapping("/cancel/{id}")
+    public ResponseEntity<OrderResponse> cancelOrder(@RequestBody ConfirmRequest request, @PathVariable Long id){
+        Order order = orderService.cancelOrder(id, request.isConfirm());
         return ResponseEntity.status(HttpStatus.OK).body(new OrderResponse(order));
     }
 }

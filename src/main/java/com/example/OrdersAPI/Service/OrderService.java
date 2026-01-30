@@ -125,10 +125,13 @@ public class OrderService {
     }
     //Cancela la orden
     @Transactional
-    public Order cancelOrder(Long id) {
+    public Order cancelOrder(Long id, boolean confirm) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoFoundException(id));
         if(order.getStatusOrder() == StatusOrder.CANCELED){
             throw new IllegalStatusException(order.getStatusOrder());
+        }
+        if(!confirm){
+            return  order;
         }
         for(OrderItem item : order.getItemList()){
             Product p = item.getProduct();
