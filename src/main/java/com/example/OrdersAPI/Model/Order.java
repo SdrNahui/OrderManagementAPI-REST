@@ -32,7 +32,9 @@ public class Order {
     public Long getId() {
         return id;
     }
-
+    public void setId(Long id){
+        id = id;
+    }
     public List<OrderItem> getItemList() {
         return itemList;
     }

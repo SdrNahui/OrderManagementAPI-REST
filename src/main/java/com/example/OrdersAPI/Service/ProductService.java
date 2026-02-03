@@ -1,5 +1,8 @@
 package com.example.OrdersAPI.Service;
 
+import com.example.OrdersAPI.Dto.ProductRequest;
+import com.example.OrdersAPI.Dto.ProductResponse;
+import com.example.OrdersAPI.Exception.NoFoundException;
 import com.example.OrdersAPI.Model.Product;
 import com.example.OrdersAPI.Repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +17,12 @@ public class ProductService {
     public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
     }
-    public Product createProduct(Product product){
+    public Product createProduct(ProductRequest request){
+        Product product = new Product();
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setStock(request.getStock());
+        product.setPrice(request.getPrice());
         return productRepository.save(product);
     }
 
@@ -25,7 +33,7 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public Optional<Product> updateProduct(Long id, Product productUpdate){
+    public Optional<Product> updateProduct(Long id, ProductRequest productUpdate){
         return productRepository.findById(id).map(exist -> {
            exist.setName(productUpdate.getName());
            exist.setDescription(productUpdate.getDescription());
@@ -34,11 +42,11 @@ public class ProductService {
            return productRepository.save(exist);
         });
     }
-     public boolean deleteProduct(Long id){
+     public void deleteProduct(Long id){
         if(!productRepository.existsById(id)) {
-            return false;
+            throw new NoFoundException(id);
         }
-     return true;
+        productRepository.deleteById(id);
      }
 
 }

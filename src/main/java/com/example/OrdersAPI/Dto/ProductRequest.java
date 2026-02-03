@@ -1,33 +1,26 @@
-package com.example.OrdersAPI.Model;
+package com.example.OrdersAPI.Dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
-@Entity
-public class Product {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
+public class ProductRequest {
     @NotBlank
     private String name;
     @NotBlank
-    private String description;
+    String description;
     @PositiveOrZero
     private int stock;
     @Positive
     private BigDecimal price;
 
-    public Product(){
-
+    public ProductRequest(){
     }
-
-    public Long getId() {
-        return id;
+    public ProductRequest(String name, String description, int stock, BigDecimal price){
+        this.name = name;
+        this.description = description;
+        this.stock = stock;
+        this.price = price;
     }
 
     public String getName() {

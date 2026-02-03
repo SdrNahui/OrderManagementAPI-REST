@@ -2,11 +2,12 @@ package com.example.OrdersAPI.Dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class ProductOrderRequest {
     @NotNull
     private Long idProduct;
-    @Min(1)
+    @PositiveOrZero
     @NotNull
     private Integer amount;
 
